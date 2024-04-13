@@ -1,15 +1,14 @@
-name: 'Lock threads'
-
-on:
-  schedule:
-    - cron: '0 0 * * *'
-
 jobs:
   lock:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - uses: dessant/lock-threads@v4
-        with:
-          github-token: ${{ github.token }}
-          issue-inactive-days: '180'
-          pr-inactive-days: '180'
+    - continue-on-error: true
+      uses: dessant/lock-threads@v4
+      with:
+        github-token: ${{ github.token }}
+        issue-inactive-days: '180'
+        pr-inactive-days: '180'
+name: Lock threads
+on:
+  repository_dispatch:
+    types: trigger-ga___lock.yml
